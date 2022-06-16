@@ -40,81 +40,39 @@ preg_match_all('!<div class="desc">\s(.*?)<\/div>!is',$result2, $plot);
 $movies2['plot'] = $plot[1];
 
 //match genre, actor, director, country
-preg_match_all('!<div class="mvici-left">(.*?)<\/div>!is',$result2, $match2);
-
-//match genre, actor, director, country individually from above block
-for ($i=0;$i<count($match2[1]);$i++){
-
-    //match Genre
-    if (preg_match_all('!<a href="\/\/series9.la\/genre.*?" title=".*?">(.*?)<\/a>!is',$match2[1][$i],$genre)){
-        $movies2['genre'][$i] = $genre[1];
-    }
-    else {
-        $movies2['info'][$i] = '';
-
-    };
-    //match actor
-    if (preg_match_all('!<a href="\/\/series9.la\/actor.*?" title=".*?">(.*?)<\/a>!is',$match2[1][$i],$actor)){
-        $movies2['actor'][$i] = $actor[1];
-    }
-    else {
-        $movies2['actor'][$i] = '';
-    };
-    //match director 
-    if (preg_match_all('!<a href="#" title=".*?">(.*?)<\/a>!is',$match2[1][$i],$director)){
-        $movies2['director'][$i] = $director[1];
-    }
-    else {
-        $movies2['director'][$i] = '';
-    };
-    //country
-    if (preg_match_all('!<a href="\/country.*?" title=".*?">(.*?)<\/a>!is',$match2[1][$i],$country)){
-        $movies2['country'][$i] = $country[1];
-    }
-    else {
-        $movies2['country'][$i] = '';
-    };
-};
+//match Genre
+preg_match_all('!<a href="\/\/series9.la\/genre.*?" title=".*?">(.*?)<\/a>!is',$result2,$genre);
+$movies2['genre'] = $genre[1];
+    
+//match actor
+preg_match_all('!<a href="\/\/series9.la\/actor.*?" title=".*?">(.*?)<\/a>!is',$result2,$actor);
+$movies2['actor'] = $actor[1];
+    
+//match director 
+preg_match_all('!<a href="#" title=".*?">(.*?)<\/a>!is',$result2,$director);
+$movies2['director'] = $director[1];
+    
+//country
+preg_match_all('!<a href="\/country.*?" title=".*?">(.*?)<\/a>!is',$result2,$country);
+$movies2['country'] = $country[1];
 
 //match duration, quality, release, imdbrating 
-preg_match_all('!<div class="mvici-right">(.*?)<\/div>!is',$result2, $match2);
 
-//match duration, quality, release, imdbrating individually from above block
-for ($i=0;$i<count($match2[1]);$i++){
-
-    //match duration
-    if (preg_match_all('!<p><strong>Duration:<\/strong>\s(.*?)<\/p>!is',$match2[1][$i],$duration)){
-        $movies2['duration'][$i] = $duration[1];
-    }
-    else {
-        $movies2['duration'][$i] = '';
-
-    };
-    //match quality
-    if (preg_match_all('!<p><strong>Quality:<\/strong> <span class="quality">(.*?)<\/span><\/p>!is',$match2[1][$i],$quality)){
-        $movies2['quality'][$i] = $quality[1];
-    }
-    else {
-        $movies2['quality'][$i] = '';
-
-    };
-    //match release
-    if (preg_match_all('!<p><strong>Release:<\/strong>\s(.*?)<\/p>!is',$match2[1][$i],$release)){
-        $movies2['release'][$i] = $release[1];
-    }
-    else {
-        $movies2['release'][$i] = '';
-
-    };
-    //match imdb rating
-    if (preg_match_all('!<p><strong>IMDb:<\/strong>\s(.*?)<\/p>!is',$match2[1][$i],$imdbrating)){
-        $movies2['imdbrating'][$i] = $imdbrating[1];
-    }
-    else {
-        $movies2['imdbrating'][$i] = '';
-
-    };
-};
+//match duration
+preg_match_all('!<p><strong>Duration:<\/strong>\s(.*?)<\/p>!is',$result2,$duration);
+$movies2['duration'] = $duration[1];
+    
+//match quality
+preg_match_all('!<p><strong>Quality:<\/strong> <span class="quality">(.*?)<\/span><\/p>!is',$result2,$quality);
+$movies2['quality'] = $quality[1];
+        
+//match release
+preg_match_all('!<p><strong>Release:<\/strong>\s(.*?)<\/p>!is',$result2,$release);
+$movies2['release'] = $release[1];
+        
+//match imdb rating
+preg_match_all('!<p><strong>IMDb:<\/strong>\s(.*?)<\/p>!is',$result2,$imdbrating);
+$movies2['imdbrating'] = $imdbrating[1];
 
 //match substitle 
 preg_match_all('!<a href="(.*?)" target="_blank" class="btn bp-btn-dowload-sub"!',$result2, $substitle);
@@ -129,4 +87,4 @@ preg_match_all('!player-data="(.*?)"!',$result2, $server);
 $movies2['server'] = $server[1];
 
 $JSON = json_encode($movies2);
-print_r($JSON);
+echo $JSON;
